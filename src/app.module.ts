@@ -10,7 +10,7 @@ import { jwtConstants } from './constant/jwt.constant';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      url: 'postgresql://authentication_cv8m_user:nB61GVdLEPKZ8QuSGyAuWB20jVSY9ymY@dpg-d0uohqk9c44c73bj636g-a.oregon-postgres.render.com/authentication_cv8m',
+      url: '',
       synchronize: true,
       autoLoadEntities: true,
       ssl: true,
