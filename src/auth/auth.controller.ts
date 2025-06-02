@@ -13,7 +13,7 @@ export class AuthController {
   @ApiResponse({ status: 201, description: 'User created successfully' })
   @ApiResponse({ status: 400, description: 'Validation error' })
   async signup(@Body() dto: SignupDto) {
-    await this.authservice.createUser(dto);
+    return await this.authservice.createUser(dto);
   }
 
   @Post('login')
@@ -22,6 +22,6 @@ export class AuthController {
   @ApiResponse({ status: 200, description: 'Login successful' })
   @ApiResponse({ status: 401, description: 'Invalid credentials' })
   async login(@Body() dto: LoginDto) {
-    await this.authservice.loginUser(dto);
+    return await this.authservice.loginUser(dto);
   }
 }

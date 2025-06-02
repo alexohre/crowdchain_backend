@@ -34,8 +34,12 @@ export class AuthService {
         ...dto,
         password: hashedpassword,
       });
+      await this.userservice.save(newUser);
+      console.log(newUser);
+
       return newUser;
     } catch (error) {
+      console.log(error);
       if (error instanceof ConflictException) {
         throw error; // let it pass through
       }
@@ -48,6 +52,7 @@ export class AuthService {
       const user = await this.userservice.findOne({
         where: { email: dto.email },
       });
+
       if (!user) throw new BadRequestException('user does not exist');
       const isMatch = await bcrypt.compare(dto.password, user.password);
 
@@ -65,9 +70,9 @@ export class AuthService {
       ) {
         throw error;
       }
+      throw new InternalServerErrorException(
+        'An unexpected error occurred during login.',
+      );
     }
-    throw new InternalServerErrorException(
-      'An unexpected error occurred during login.',
-    );
   }
 }
