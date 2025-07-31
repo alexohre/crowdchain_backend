@@ -1,0 +1,36 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model CreatorApplication {
+  id               Int      @id @default(autoincrement())
+  walletAddress    String   @unique @map("wallet_address") @db.VarChar(66)
+  fullName         String   @map("full_name") @db.VarChar(255)
+  email            String   @db.VarChar(255)
+  professionalTitle String? @map("professional_title") @db.VarChar(255)
+  linkedinUrl      String?  @map("linkedin_url") @db.VarChar(500)
+  websiteUrl       String?  @map("website_url") @db.VarChar(500)
+  verificationDocs String[] @map("verification_docs")
+  status           ApplicationStatus @default(PENDING)
+  submittedAt      DateTime @default(now()) @map("submitted_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  @@map("creator_applications")
+}
+
+enum ApplicationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+
+  @@map("application_status")
+}
